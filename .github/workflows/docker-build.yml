@@ -1,6 +1,7 @@
 name: Build and Push Multi‑Arch Docker Image
 
 on:
+  workflow_dispatch:       # ✅ 支持手动触发
   push:
     branches:
       - main
@@ -9,7 +10,6 @@ on:
   pull_request:
     branches:
       - main
-
 env:
   REGISTRY: docker.io
   IMAGE_NAME: evanhwang/tokenpay
