@@ -40,10 +40,11 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./src                      # 如果 Dockerfile 在 src 目录
-          file: ./src/Dockerfile              # 修改为你的实际路径
+          context: ./src                      # 你的代码目录
+          file: ./src/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:latest
-            ${{ github.ref_type == 'tag' && env.IMAGE_NAME }}:${{ github.ref_name }}
+            ${{ startsWith(github.ref, 'refs/tags/') && format('{0}:{1}', env.IMAGE_NAME, github.ref_name) || '' }}
+
